@@ -5,9 +5,9 @@ public class TimeController : IUpdatable
 {
     public event Action OnDayTimeEnded;
     public event Action OnNightTimeEnded;
-    
-    private float dayDuration = 60f;
-    private float nightDuration = 60f;
+
+    public float dayDuration { get; private set; } = 15f;
+    public float nightDuration{ get; private set; } = 15f;
 
     private float currentTime;
     private bool isRunning;
@@ -43,6 +43,7 @@ public class TimeController : IUpdatable
 
     public void Update(float deltaTime)
     {
+        
         if (!isRunning) return;
 
         currentTime += deltaTime;
@@ -52,18 +53,16 @@ public class TimeController : IUpdatable
             case TimePhase.Day:
                 if (currentTime >= dayDuration)
                 {
-                    currentTime = 0f;
                     OnDayTimeEnded?.Invoke();
-                    StartNight();
+                    Pause();
                 }
                 break;
 
             case TimePhase.Night:
                 if (currentTime >= nightDuration)
                 {
-                    currentTime = 0f;
                     OnNightTimeEnded?.Invoke();
-                    StartDay();
+                    Pause();
                 }
                 break;
         }
@@ -71,4 +70,10 @@ public class TimeController : IUpdatable
 
     public float GetCurrentTime() => currentTime;
     public bool IsDay() => currentPhase == TimePhase.Day;
+
+    public bool isPause()
+    {
+        if(isRunning) return false;
+        return true;
+    }
 }

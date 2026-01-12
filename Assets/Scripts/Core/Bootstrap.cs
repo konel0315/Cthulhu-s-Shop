@@ -6,17 +6,20 @@ using UnityEngine;
 public class Bootstrap : MonoBehaviour
 {
     private GameManager gameManager;
-    
+    private GameFlowManager flowManager;
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
         
         gameManager = new GameManager();
-        GameFlowManager flowManager = new GameFlowManager();
+        flowManager = new GameFlowManager();
             
         gameManager.SetFlowManager(flowManager);
         
         gameManager.RegisterUpdateable(flowManager.timeController);
+
+        UIInstaller uiInstaller = FindAnyObjectByType<UIInstaller>();
+        uiInstaller.Bind(flowManager);
         
         gameManager.StartGame();
     }

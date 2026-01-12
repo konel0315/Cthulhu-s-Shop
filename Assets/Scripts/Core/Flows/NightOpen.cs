@@ -1,11 +1,11 @@
-﻿public class DayOpen : IGameFlow
+﻿public class NightOpen : IGameFlow
 {
     private readonly GameFlowManager gameFlowManager;
     private readonly TimeController timeController;
     private readonly DisplayController displayController;
     private readonly UIController uiController;
 
-    public DayOpen(GameFlowManager gameFlowManager)
+    public NightOpen(GameFlowManager gameFlowManager)
     {
         this.gameFlowManager = gameFlowManager;
         timeController = gameFlowManager.timeController;
@@ -15,21 +15,18 @@
 
     public void Enter()
     {
-        timeController.StartDay();
+        timeController.StartNight();
         timeController.OnDayTimeEnded +=OnConfirm;
-        //uiController.ShowUIDayOpenUI();
         //VisitorController.StartDayCusmtomer();
     }
 
     public void Exit()
     {
         timeController.OnDayTimeEnded -=OnConfirm;
-        //uiController.HideUIDayOpenUI();
         //VisitorController.EndDayCusmtomer();
     }
-
     private void OnConfirm()
     {
-        gameFlowManager.ChangeFlow(new DecisionNight (gameFlowManager));
+        gameFlowManager.ChangeFlow(new SettleTheDay(gameFlowManager));
     }
 }
