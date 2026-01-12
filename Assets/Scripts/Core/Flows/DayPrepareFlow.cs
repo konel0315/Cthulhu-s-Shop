@@ -17,16 +17,16 @@
     {
         timeController.Pause();
         //displayController.SetInteractable(true);
-        //uiController.ShowUIPrepareUI();
-        //uiController.OnpPrepareConfirmed += OnConfirm;
+        uiController.ShowUIPrepareUI();
+        uiController.OnPrepareConfirmed += OnConfirm;
     }
 
     public void Exit() 
     {
         timeController.Resume();
-        //uiController.OnpPrepareConfirmed -= OnConfirm;
+        uiController.OnPrepareConfirmed -= OnConfirm;
         //displayController.SetInteractable(false);
-        //uiController.HideUIPrepareUI();
+        uiController.HideUIPrepareUI();
         
     }
 
