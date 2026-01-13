@@ -1,21 +1,27 @@
-﻿public class DayPrepareFlow : IGameFlow
+﻿using UnityEngine;
+
+public class DayPrepareFlow : IGameFlow
 { 
-    private readonly GameFlowManager gameFlowManager;
     // private readonly TimeController timeController;
-    private readonly DisplayController displayController;
+    
+    private readonly GameFlowManager gameFlowManager;
+    private readonly InventoryController inventoryController;
     private readonly UIController uiController;
 
     public DayPrepareFlow(GameFlowManager gameFlowManager)
     {
         this.gameFlowManager = gameFlowManager;
         // timeController = gameFlowManager.timeController;
-        displayController = gameFlowManager.displayController;
         uiController = gameFlowManager.uiController;
+        inventoryController = gameFlowManager.inventoryController;
     }
 
     public void Enter() 
     {
         // timeController.Pause();
+
+        ItemSO gold = Resources.Load<ItemSO>("Data/Item/Gold");
+        inventoryController.AddItem(gold, 3);
         //displayController.SetInteractable(true);
         uiController.ShowUIPrepareUI();
         uiController.ShowUIDayBackgroundUI();
@@ -25,6 +31,8 @@
     public void Exit() 
     {
         // timeController.Resume();
+        
+        
         //displayController.SetInteractable(false);
         uiController.HideUIPrepareUI();
         //uiController.HideUIDayBackgroundUI();

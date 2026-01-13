@@ -4,14 +4,12 @@ public class NightPrepare : IGameFlow
 {
     private readonly GameFlowManager gameFlowManager;
     // private readonly TimeController timeController;
-    private readonly DisplayController displayController;
     private readonly UIController uiController;
 
     public NightPrepare(GameFlowManager gameFlowManager)
     {
         this.gameFlowManager = gameFlowManager;
         // timeController = gameFlowManager.timeController;
-        displayController = gameFlowManager.displayController;
         uiController = gameFlowManager.uiController;
     }
 
