@@ -3,30 +3,30 @@
 public class DecisionNight : IGameFlow
 {
     private readonly GameFlowManager gameFlowManager;
-    private readonly TimeController timeController;
+    // private readonly TimeController timeController;
     private readonly DisplayController displayController;
     private readonly UIController uiController;
 
     public DecisionNight(GameFlowManager gameFlowManager)
     {
         this.gameFlowManager = gameFlowManager;
-        timeController = gameFlowManager.timeController;
+        // timeController = gameFlowManager.timeController;
         displayController = gameFlowManager.displayController;
         uiController = gameFlowManager.uiController;
     }
 
     public void Enter()
     {
-        timeController.Pause();
-        //uiController.DecisionNightUIShowUI();
+        // timeController.Pause();
+        uiController.DecisionNightUIShowUI();
         uiController.OnNightConfirmed += OnNightConfirmed;
         uiController.OnNextDayConfirmed += OnNextDayConfirmed;
     }
 
     public void Exit()
     {
-        timeController.Resume();
-        //uiController.DecisionNightUIHideUI();
+        // timeController.Resume();
+        uiController.DecisionNightUIHideUI();
         uiController.OnNightConfirmed -= OnNightConfirmed;
         uiController.OnNextDayConfirmed -= OnNextDayConfirmed;
     }

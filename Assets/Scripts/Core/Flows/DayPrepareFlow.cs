@@ -1,32 +1,34 @@
 ﻿public class DayPrepareFlow : IGameFlow
 { 
     private readonly GameFlowManager gameFlowManager;
-    private readonly TimeController timeController;
+    // private readonly TimeController timeController;
     private readonly DisplayController displayController;
     private readonly UIController uiController;
 
     public DayPrepareFlow(GameFlowManager gameFlowManager)
     {
         this.gameFlowManager = gameFlowManager;
-        timeController = gameFlowManager.timeController;
+        // timeController = gameFlowManager.timeController;
         displayController = gameFlowManager.displayController;
         uiController = gameFlowManager.uiController;
     }
 
     public void Enter() 
     {
-        timeController.Pause();
+        // timeController.Pause();
         //displayController.SetInteractable(true);
         uiController.ShowUIPrepareUI();
+        uiController.ShowUIDayBackgroundUI();
         uiController.OnPrepareConfirmed += OnConfirm;
     }
 
     public void Exit() 
     {
-        timeController.Resume();
-        uiController.OnPrepareConfirmed -= OnConfirm;
+        // timeController.Resume();
         //displayController.SetInteractable(false);
         uiController.HideUIPrepareUI();
+        //uiController.HideUIDayBackgroundUI();
+        uiController.OnPrepareConfirmed -= OnConfirm;
         
     }
 
