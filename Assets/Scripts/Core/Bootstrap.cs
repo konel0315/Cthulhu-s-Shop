@@ -16,7 +16,7 @@ public class Bootstrap : MonoBehaviour
             
         gameManager.SetFlowManager(flowManager);
         
-        gameManager.RegisterUpdateable(flowManager.timeController);
+        // gameManager.RegisterUpdateable(flowManager.timeController);
 
         UIInstaller uiInstaller = FindAnyObjectByType<UIInstaller>();
         uiInstaller.Bind(flowManager);

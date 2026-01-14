@@ -6,15 +6,16 @@ public class GameFlowManager
 {
     private IGameFlow currentGameFlow;
 
-    public TimeController timeController { get; private set;}
-    public DisplayController displayController { get; private set;}
+    // public TimeController timeController { get; private set;}
     public UIController uiController { get; private set;}
+    public InventoryController inventoryController { get; private set;}
+    
 
     public GameFlowManager()
     {
-        timeController = new TimeController();
-        displayController = new DisplayController();
+        // timeController = new TimeController();
         uiController = new UIController();
+        inventoryController = new InventoryController();
     }
 
     public void ExcuteFlow()

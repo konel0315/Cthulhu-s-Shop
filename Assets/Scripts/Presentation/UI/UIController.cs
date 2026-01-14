@@ -7,12 +7,26 @@ public class UIController
     public event Action OnNextDayConfirmed;
     public event Action onShowUIPrepareUI;
     public event Action onHideUIPrepareUI;
+    public event Action onShowUIDecisionNightUIShowUI;
+    public event Action onHideUIDecisionNightUIShowUI;
+    public event Action onShowUIDayBackgroundUI;
+    public event Action onHideUIDayBackgroundUI;
+    public event Action onShowUINightBackgroundUI;
+    public event Action onHideUINightBackgroundUI;
+    
     
     public void ShowUIPrepareUI()=>onShowUIPrepareUI?.Invoke();
     public void HideUIPrepareUI()=>onHideUIPrepareUI?.Invoke();
     
+    public void DecisionNightUIShowUI()=>onShowUIDecisionNightUIShowUI?.Invoke();
+    public void DecisionNightUIHideUI()=>onHideUIDecisionNightUIShowUI?.Invoke();
     
-    //밤 낮 선택 버튼 부분 생성 예정
+    public void ShowUIDayBackgroundUI()=>onShowUIDayBackgroundUI?.Invoke();
+    public void HideUIDayBackgroundUI()=>onHideUIDayBackgroundUI?.Invoke();
+    
+    public void ShowUINightBackgroundUI()=>onShowUINightBackgroundUI?.Invoke();
+    public void HideUINightBackgroundUI()=>onHideUINightBackgroundUI?.Invoke();
+    
     public void PrepareConfirmed()
     {
         OnPrepareConfirmed?.Invoke();

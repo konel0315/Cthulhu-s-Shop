@@ -1,32 +1,44 @@
-﻿public class DayPrepareFlow : IGameFlow
+﻿using UnityEngine;
+
+public class DayPrepareFlow : IGameFlow
 { 
+    // private readonly TimeController timeController;
+    
     private readonly GameFlowManager gameFlowManager;
-    private readonly TimeController timeController;
-    private readonly DisplayController displayController;
+    private readonly InventoryController inventoryController;
     private readonly UIController uiController;
 
     public DayPrepareFlow(GameFlowManager gameFlowManager)
     {
         this.gameFlowManager = gameFlowManager;
-        timeController = gameFlowManager.timeController;
-        displayController = gameFlowManager.displayController;
+        // timeController = gameFlowManager.timeController;
         uiController = gameFlowManager.uiController;
+        inventoryController = gameFlowManager.inventoryController;
     }
 
     public void Enter() 
     {
-        timeController.Pause();
+        // timeController.Pause();
+
+        ItemSO gold = Resources.Load<ItemSO>("Data/Item/Gold");
+        inventoryController.AddItem(gold, 3);
+        ItemSO bread = Resources.Load<ItemSO>("Data/Item/Bread");
+        inventoryController.AddItem(bread, 3);
         //displayController.SetInteractable(true);
         uiController.ShowUIPrepareUI();
+        uiController.ShowUIDayBackgroundUI();
         uiController.OnPrepareConfirmed += OnConfirm;
     }
 
     public void Exit() 
     {
-        timeController.Resume();
-        uiController.OnPrepareConfirmed -= OnConfirm;
+        // timeController.Resume();
+        
+        
         //displayController.SetInteractable(false);
         uiController.HideUIPrepareUI();
+        //uiController.HideUIDayBackgroundUI();
+        uiController.OnPrepareConfirmed -= OnConfirm;
         
     }
 

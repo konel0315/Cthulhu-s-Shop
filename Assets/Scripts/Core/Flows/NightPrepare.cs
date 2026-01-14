@@ -3,31 +3,31 @@
 public class NightPrepare : IGameFlow
 {
     private readonly GameFlowManager gameFlowManager;
-    private readonly TimeController timeController;
-    private readonly DisplayController displayController;
+    // private readonly TimeController timeController;
     private readonly UIController uiController;
 
     public NightPrepare(GameFlowManager gameFlowManager)
     {
         this.gameFlowManager = gameFlowManager;
-        timeController = gameFlowManager.timeController;
-        displayController = gameFlowManager.displayController;
+        // timeController = gameFlowManager.timeController;
         uiController = gameFlowManager.uiController;
     }
 
     public void Enter()
     {
-        timeController.Pause();
+        // timeController.Pause();
         //displayController.SetInteractable(true);
         uiController.ShowUIPrepareUI();
+        uiController.ShowUINightBackgroundUI();
         uiController.OnPrepareConfirmed += OnConfirm;
     }
 
     public void Exit()
     {
-        timeController.Resume();
+        // timeController.Resume();
         //displayController.SetInteractable(false);
         uiController.HideUIPrepareUI();
+        //uiController.HideUINightBackgroundUI();
     }
     private void OnConfirm()
     {
