@@ -22,6 +22,8 @@ public class DayPrepareFlow : IGameFlow
 
         ItemSO gold = Resources.Load<ItemSO>("Data/Item/Gold");
         inventoryController.AddItem(gold, 3);
+        ItemSO bread = Resources.Load<ItemSO>("Data/Item/Bread");
+        inventoryController.AddItem(bread, 3);
         //displayController.SetInteractable(true);
         uiController.ShowUIPrepareUI();
         uiController.ShowUIDayBackgroundUI();

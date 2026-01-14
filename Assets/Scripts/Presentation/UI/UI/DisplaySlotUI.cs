@@ -1,22 +1,29 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-class DisplaySlotUI : MonoBehaviour, IDropHandler
+class DisplaySlotUI : MonoBehaviour, IDropHandler,IBeginDragHandler, IDragHandler, IEndDragHandler , IDraggableSlot , IDisplaySlot
 {
     [SerializeField] private Image icon;
+    [SerializeField] private TextMeshProUGUI quantityText;
     
     private DisplayController displayController;
-    private int displayIndex;
+    public int displayIndex {get; private set; }
+    public InventoryItem currentItem {get; private set; }
+    public SlotSourceType SourceType => SlotSourceType.Display;
+    
     public void Bind(DisplayController controller, int index)
     {
         displayController = controller;
         displayIndex = index;
     }
     
+    
     public void SetSlot(ItemSO item, int quantity)
     {
         icon.sprite = item.icon;
+        if(quantity!=1)quantityText.text = quantity.ToString();
         gameObject.SetActive(true);
     }
 
@@ -25,30 +32,47 @@ class DisplaySlotUI : MonoBehaviour, IDropHandler
         icon.sprite = Resources.Load<Sprite>("UI/투명");
     }
     
-    public void OnDrop(PointerEventData eventData)
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        SlotUI draggedSlot = eventData.pointerDrag?.GetComponent<SlotUI>();
+        
+        if (displayController.GetItemAt(displayIndex) == null)
+        {
+            return;
+        }
+        DragItemUI.Instance.BeginDrag(displayController.GetItemAt(displayIndex));
+    }
+    
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (displayController.GetItemAt(displayIndex) != null)
+            DragItemUI.Instance.UpdatePosition(eventData.position);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        DragItemUI.Instance.EndDrag();
+        RefreshSlot();
+    }
+    
+    
+    
+    public void OnDrop(PointerEventData eventData)
+    { 
+        IDraggableSlot draggedSlot = eventData.pointerDrag?.GetComponent<IDraggableSlot>();
+        
         if (draggedSlot == null) return;
 
-        InventoryItem draggedItem = draggedSlot.currentItem;
-        if (draggedItem == null) return;
-
-        // 디스플레이에 아이템 놓기 시도
-        bool success = displayController.PlaceFromInventory(draggedItem.itemData, displayIndex);
-
-        // DragItemUI는 단순 시각용
-        DragItemUI.Instance.EndDrag();
-
-        if (!success)
+        if (draggedSlot is IDisplaySlot fromDisplaySlot)
         {
-            // 실패 시 드래그 슬롯과 이 슬롯 UI 원상복구
-            draggedSlot.RefreshSlot();
-            RefreshSlot();
+            displayController.Swap(fromDisplaySlot.displayIndex,displayIndex); 
         }
         else
         {
-            RefreshSlot();
+            displayController.PlaceFromInventory(draggedSlot.currentItem.itemData, displayIndex);
         }
+
+        draggedSlot.RefreshSlot();
+        RefreshSlot();
     }
     public void RefreshSlot()
     {

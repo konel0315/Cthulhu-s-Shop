@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler ,IDraggableSlot,IDropHandler
 {
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI quantityText;
@@ -11,7 +11,7 @@ public class SlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     private InventoryController inventoryController;
     private int slotIndex;
     public InventoryItem currentItem {get; private set; }
-
+    public SlotSourceType SourceType => SlotSourceType.Inventory;
     public void Bind(InventoryController controller, int index)
     {
         inventoryController = controller;
@@ -28,9 +28,9 @@ public class SlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     public void SetSlot(ItemSO item, int quantity)
     {
         icon.sprite = item.icon;
-        quantityText.text = quantity.ToString();
+        if(quantity!=1)quantityText.text = quantity.ToString();
         gameObject.SetActive(true);
-        currentItem = new InventoryItem(item, quantity);
+        currentItem = inventoryController.GetItem(slotIndex);
     }
 
     public void ClearSlot()
@@ -63,7 +63,21 @@ public class SlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         if (currentItem != null)
             DragItemUI.Instance.UpdatePosition(eventData.position);
     }
+    
+    public void OnDrop(PointerEventData eventData)
+    { 
+        IDraggableSlot draggedSlot = eventData.pointerDrag?.GetComponent<IDraggableSlot>();
+        
+        if (draggedSlot == null) return;
 
+        if (draggedSlot is IDisplaySlot fromDisplaySlot)
+        {
+            inventoryController.displayController.ReturnToInventory(fromDisplaySlot.displayIndex);
+        }
+        
+        draggedSlot.RefreshSlot();
+        RefreshSlot();
+    }
     public void OnEndDrag(PointerEventData eventData)
     {
         DragItemUI.Instance.EndDrag();

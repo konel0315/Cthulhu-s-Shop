@@ -21,12 +21,12 @@ public class DisplayUI : MonoBehaviour
     {
         if(_displayController == null) return;
         
-        for(int i=0;i<3;i++)
+        for(int i=0;i<slots.Count;i++)
         {
-            var items = _displayController.GetItemAt(i);
-            if (items != null)
+            var item = _displayController.GetItemAt(i);
+            if (item != null)
             {
-                slots[i].SetSlot(items,1);
+                slots[i].SetSlot(item,1);
             }
             else
             {

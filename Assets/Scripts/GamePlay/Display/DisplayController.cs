@@ -11,7 +11,7 @@ public class DisplayController
 
     private bool canEditDisplay = true;
     public event Action OnDisplayChanged;
-
+    
     public DisplayController(InventoryController inventoryController)
     {
         this.inventoryController = inventoryController;
@@ -134,9 +134,5 @@ public class DisplayController
     {
         return index >= 0 && index < DISPLAY_SLOT_COUNT;
     }
-
-    public void Refresh()
-    {
-        OnDisplayChanged?.Invoke();
-    }
+    
 }

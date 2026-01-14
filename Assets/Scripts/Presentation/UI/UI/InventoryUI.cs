@@ -4,13 +4,13 @@ using UnityEngine;
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] private Transform slotParent;
-    [SerializeField] private List<SlotUI> slots;
+    [SerializeField] private List<InventorySlotUI> slots;
 
     private InventoryController inventoryController;
 
-    public void Bind(InventoryController inventoryControllercontroller)
+    public void Bind(InventoryController inventoryController)
     {
-        inventoryController = inventoryControllercontroller;
+        this.inventoryController = inventoryController;
         RefreshUI();
         for (int i=0; i<slots.Count; i++)
         {
