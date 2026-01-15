@@ -5,6 +5,7 @@
     private readonly GameFlowManager gameFlowManager;
     private readonly UIController uiController;
     private readonly InventoryController inventoryController;
+    private readonly DisplayController displayController;
 
     public DayOpen(GameFlowManager gameFlowManager)
     {
@@ -13,6 +14,7 @@
         this.gameFlowManager = gameFlowManager;
         uiController = gameFlowManager.uiController;
         inventoryController = gameFlowManager.inventoryController;
+        displayController = gameFlowManager.displayController;
     }
 
     public void Enter()
@@ -21,7 +23,7 @@
         // timeController.StartDay();
         // timeController.OnDayTimeEnded +=OnConfirm;
         
-        inventoryController.displayController.SetEditable(false);
+        displayController.SetEditable(false);
         //uiController.ShowUIDayOpenUI();
         //VisitorController.StartDayCusmtomer();
     }

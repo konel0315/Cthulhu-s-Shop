@@ -1,6 +1,6 @@
 ﻿public interface IDraggableSlot
 {
     SlotSourceType SourceType { get; }
-    InventoryItem currentItem { get;}
+    GameItem currentItem { get;}
     public abstract void RefreshSlot();
 }

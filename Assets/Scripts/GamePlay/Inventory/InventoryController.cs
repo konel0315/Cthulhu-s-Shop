@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class InventoryController
 {
-    List<InventoryItem> inventory = new List<InventoryItem>();
+    List<GameItem> inventory = new List<GameItem>();
 
     public event Action OnInventoryChanged;
     public int maxInventorySlot { get; private set; } = 8;
@@ -11,7 +12,7 @@ public class InventoryController
 
     public InventoryController()
     {
-        displayController = new DisplayController(this);
+        
     }
 
 
@@ -30,18 +31,21 @@ public class InventoryController
             if (inventory.Count + 1 > maxInventorySlot)
                 return false;
 
-            inventory.Add(new InventoryItem(item, amount));
+            inventory.Add(new GameItem(item, amount));
             OnInventoryChanged?.Invoke();
             return true;
         }
         else
         {
             if (inventory.Count + amount > maxInventorySlot)
+            {
+                Debug.Log("인벤토리초과");
                 return false;
+            }
 
             for (int i = 0; i < amount; i++)
             {
-                inventory.Add(new InventoryItem(item, 1));
+                inventory.Add(new GameItem(item, 1));
             }
 
             OnInventoryChanged?.Invoke();
@@ -83,10 +87,10 @@ public class InventoryController
     }
 
 
-    public List<InventoryItem> GetAllItems()
+    public List<GameItem> GetAllItems()
     {
-        return new List<InventoryItem>(inventory);
+        return new List<GameItem>(inventory);
     }
 
-    public InventoryItem GetItem(int slot) => inventory[slot];
+    public GameItem GetItem(int slot) => inventory[slot];
 }

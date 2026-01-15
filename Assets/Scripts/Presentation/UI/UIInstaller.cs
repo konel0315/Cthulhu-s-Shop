@@ -10,15 +10,24 @@ public class UIInstaller : MonoBehaviour
     [SerializeField] private NightBackgroundUI _nightBackgroundUI;
     [SerializeField] private InventoryUI _inventoryUI;
     [SerializeField] private DisplayUI _displayUI;
+    [SerializeField] private VisitorUI _visitorUI;
+    [SerializeField] private HoldingUI _holdingUI;
+    [SerializeField] private DecisionUI _decisionUI;
+    [SerializeField] private DragItemUI _dragItemUI;
 
     public void Bind(GameFlowManager gameFlowManager)
     {
-        _prepareUI.Bind(gameFlowManager.uiController);
         // _clockUI.Bind(gameFlowManager.timeController);
+        
+        _prepareUI.Bind(gameFlowManager.uiController);
         _decisionNightUI.Bind(gameFlowManager.uiController);
         _dayBackgroundUI.Bind(gameFlowManager.uiController);
         _nightBackgroundUI.Bind(gameFlowManager.uiController);
-        _inventoryUI.Bind(gameFlowManager.inventoryController);
-        _displayUI.Bind(gameFlowManager.inventoryController.displayController);
+        _inventoryUI.Bind(gameFlowManager.inventoryController,gameFlowManager.displayController);
+        _displayUI.Bind(gameFlowManager.displayController);
+        _visitorUI.Bind(gameFlowManager.uiController);
+        _holdingUI.Bind(gameFlowManager.holdingAreaController, gameFlowManager.displayController);
+        _decisionUI.Bind(gameFlowManager.uiController);
+        _dragItemUI.Bind(gameFlowManager.holdingAreaController);
     }
 }

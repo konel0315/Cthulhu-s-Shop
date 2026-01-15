@@ -55,10 +55,9 @@ public class DisplayController
     // Inventory → Display
     public bool PlaceFromInventory(ItemSO item, int displayIndex)
     {
-        Debug.Log("PlaceFromInventory");
-        if (!IsEditable()) {Debug.Log("PlaceFromInventory2");return false;}
-        if (!IsValidIndex(displayIndex)) {Debug.Log("PlaceFromInventory23");return false;}
-        if (!item.canDisplay) {Debug.Log("PlaceFromInventory24");return false;}
+        if (!IsEditable()) {return false;}
+        if (!IsValidIndex(displayIndex)) {return false;}
+        if (!item.canDisplay) {return false;}
         
         // 인벤토리에서 1개 제거 가능한지 확인
         if (!inventoryController.RemoveItem(item, 1))
@@ -108,6 +107,30 @@ public class DisplayController
         OnDisplayChanged?.Invoke();
         return true;
     }
+
+    public bool RemoveAt(int index)
+    {
+        if (!IsValidIndex(index)) return false;
+
+        if (displaySlots[index] == null)
+            return false;
+
+        displaySlots[index] = null;
+        OnDisplayChanged?.Invoke();
+        return true;
+    }
+
+    public bool PlaceFromHoldinArea(ItemSO item, int displayIndex)
+    {
+        if (!IsValidIndex(displayIndex)) return false;
+        if (displaySlots[displayIndex] == null)
+        {
+            displaySlots[displayIndex] = item;
+            OnDisplayChanged?.Invoke();
+        }
+        return false;
+    }
+
 
     /* =========================
      * 판매 / 소비

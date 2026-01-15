@@ -8,7 +8,13 @@ public class DragItemUI : MonoBehaviour
     [SerializeField] private Image icon;
 
     private ItemSO currentItem;
-
+    
+    private HoldingAreaController holdingArea;
+    public void Bind(HoldingAreaController holdingArea)
+    {
+        this.holdingArea = holdingArea;
+    }
+    
     void Awake()
     {
         Instance = this;
@@ -23,6 +29,11 @@ public class DragItemUI : MonoBehaviour
         }
     }
     
+    public bool CanStartDrag()
+    {
+        return holdingArea == null || !holdingArea.HasItem;
+    }
+
     public void UpdatePosition(Vector3 position)
     {
         transform.position = position;
@@ -32,6 +43,9 @@ public class DragItemUI : MonoBehaviour
     {
         if (item == null) return;
 
+        if (!CanStartDrag())
+            return;
+        
         currentItem = item;
         icon.sprite = item.icon;
         gameObject.SetActive(true);

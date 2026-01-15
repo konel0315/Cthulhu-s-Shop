@@ -9,13 +9,19 @@ public class GameFlowManager
     // public TimeController timeController { get; private set;}
     public UIController uiController { get; private set;}
     public InventoryController inventoryController { get; private set;}
-    
-
+    public VisitorController visitorController { get; private set;}
+    public DisplayController displayController { get; private set;}
+    public HoldingAreaController holdingAreaController { get; private set;}
+    public DecisionController decisionController { get; private set;}
     public GameFlowManager()
     {
         // timeController = new TimeController();
         uiController = new UIController();
         inventoryController = new InventoryController();
+        displayController = new DisplayController(inventoryController);
+        holdingAreaController = new HoldingAreaController(inventoryController, displayController);
+        visitorController = new VisitorController();
+        decisionController = new DecisionController(uiController, holdingAreaController);
     }
 
     public void ExcuteFlow()

@@ -1,5 +1,6 @@
 ﻿public enum SlotSourceType
 {
     Inventory,
-    Display
+    Display,
+    HoldingZone
 }
