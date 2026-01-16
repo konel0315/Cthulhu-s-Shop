@@ -83,6 +83,9 @@ public class UIController
     public void SetVisitorBubbleTwoSprites(Sprite spriteLeft,Sprite spriteRight) => onSetVisitorBubbleTwoSprites?.Invoke(spriteLeft,spriteRight);
     public void SetVisitorBubble(Sprite sprite)=> onSetVisitorBubble?.Invoke(sprite);
     
-    
-
+    /*HoldingUI*/
+    public event Action onShowHoldingUI;
+    public event Action onHideHoldingUI;
+    public void ShowHoldingUI()=>onShowHoldingUI?.Invoke();
+    public void HideHoldingUI()=>onHideHoldingUI?.Invoke();
 }

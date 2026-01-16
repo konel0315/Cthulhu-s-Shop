@@ -1,4 +1,6 @@
-﻿public class DayOpen : IGameFlow
+﻿using System.Collections.Generic;
+
+public class DayOpen : IGameFlow
 {
     // private readonly TimeController timeController;
     
@@ -6,6 +8,7 @@
     private readonly UIController uiController;
     private readonly InventoryController inventoryController;
     private readonly DisplayController displayController;
+    private readonly VisitorController visitorController;
 
     public DayOpen(GameFlowManager gameFlowManager)
     {
@@ -15,6 +18,7 @@
         uiController = gameFlowManager.uiController;
         inventoryController = gameFlowManager.inventoryController;
         displayController = gameFlowManager.displayController;
+        visitorController = gameFlowManager.visitorController;
     }
 
     public void Enter()
@@ -24,7 +28,11 @@
         // timeController.OnDayTimeEnded +=OnConfirm;
         
         displayController.SetEditable(false);
-        //uiController.ShowUIDayOpenUI();
+        visitorController.SetVisitors(new List<ScriptedVisitor>
+        {
+            new MVPBreadVisitor()
+        });
+        visitorController.StartNextVisitor(OnConfirm);
         //VisitorController.StartDayCusmtomer();
     }
 
@@ -33,7 +41,7 @@
         // timeController.OnDayTimeEnded -=OnConfirm;
         
         inventoryController.displayController.SetEditable(true);
-        //uiController.HideUIDayOpenUI();
+        
         //VisitorController.EndDayCusmtomer();
     }
 

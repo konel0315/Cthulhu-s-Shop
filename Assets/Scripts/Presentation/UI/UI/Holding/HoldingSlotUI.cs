@@ -6,18 +6,20 @@ using UnityEngine.UI;
 
 class HoldingSlotUI : MonoBehaviour,IDropHandler
 {
-    [SerializeField] private GameObject Root; 
+    
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI quantityText;
 
 
     private DisplayController displayController;
     private HoldingAreaController holdingAreaController;
-
-    public void Bind(HoldingAreaController holdingAreaController,DisplayController displayController)
+    private GameObject Root;
+    
+    public void Bind(HoldingAreaController holdingAreaController,DisplayController displayController,GameObject Root)
     {
         this.holdingAreaController = holdingAreaController;
         this.displayController = displayController;
+        this.Root = Root;
     }
 
     public void SetSlot(ItemSO item, int quantity)
@@ -45,6 +47,8 @@ class HoldingSlotUI : MonoBehaviour,IDropHandler
     
     public void OnDrop(PointerEventData eventData)
     { 
+        if (!Root.activeSelf) return;
+        
         IDraggableSlot draggedSlot = eventData.pointerDrag?.GetComponent<IDraggableSlot>();
         
         if (draggedSlot == null) return;

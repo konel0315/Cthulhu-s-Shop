@@ -26,6 +26,19 @@ public class VisitorUI : MonoBehaviour
     public void Bind(UIController uiController)
     {
         this.uiController = uiController;
+        
+        /*Clear*/
+        visitorRoot.SetActive(false);
+        visitorBubble.SetActive(false);
+        visitorDialogue.SetActive(false);
+        
+        visitorPortrait.sprite = Resources.Load<Sprite>("UI/투명");;
+        
+        dialogueText.text = "";
+        
+        bubbleSingle.sprite = Resources.Load<Sprite>("UI/투명");
+        bubbleLeft.sprite = Resources.Load<Sprite>("UI/투명");
+        bubbleRight.sprite = Resources.Load<Sprite>("UI/투명");
 
         // Show / Hide
         uiController.OnShowVisitorUI += ShowVisitor;

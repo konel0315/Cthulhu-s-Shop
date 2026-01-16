@@ -3,20 +3,37 @@ using UnityEngine;
 
 public class HoldingUI : MonoBehaviour
 {
+    [SerializeField] private GameObject root;
+    [SerializeField] private HoldingSlotUI slot;
+    
     private HoldingAreaController _holdingAreaController;
     private DisplayController _displayController;
+    private UIController _uiController;
 
-    [SerializeField] private HoldingSlotUI slot;
-
-    public void Bind(HoldingAreaController holdingAreaController, DisplayController displayController)
+    public void Bind(HoldingAreaController holdingAreaController, DisplayController displayController, UIController uiController)
     {
         _holdingAreaController = holdingAreaController;
         _displayController = displayController;
-
-        slot.Bind(_holdingAreaController, _displayController);
+        _uiController = uiController;
+        slot.Bind(_holdingAreaController, _displayController,root);
 
         RefreshUI();
         _holdingAreaController.OnHoldingAreaChanged += RefreshUI;
+        _uiController.onShowHoldingUI += ShowHoldingUI;
+        _uiController.onHideHoldingUI += HideHoldingUI;
+
+        root.SetActive(false);
+    }
+
+
+    private void ShowHoldingUI()
+    {
+        root.SetActive(true);
+    }
+    
+    private void HideHoldingUI()
+    {
+        root.SetActive(false);
     }
 
     private void RefreshUI()

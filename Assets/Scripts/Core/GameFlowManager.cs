@@ -16,12 +16,13 @@ public class GameFlowManager
     public GameFlowManager()
     {
         // timeController = new TimeController();
+        
         uiController = new UIController();
         inventoryController = new InventoryController();
         displayController = new DisplayController(inventoryController);
         holdingAreaController = new HoldingAreaController(inventoryController, displayController);
-        visitorController = new VisitorController();
-        decisionController = new DecisionController(uiController, holdingAreaController);
+        visitorController = new VisitorController(uiController,inventoryController);
+        decisionController = new DecisionController(uiController, holdingAreaController,visitorController);
     }
 
     public void ExcuteFlow()

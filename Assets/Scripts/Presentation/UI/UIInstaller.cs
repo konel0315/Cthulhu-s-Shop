@@ -26,7 +26,7 @@ public class UIInstaller : MonoBehaviour
         _inventoryUI.Bind(gameFlowManager.inventoryController,gameFlowManager.displayController);
         _displayUI.Bind(gameFlowManager.displayController);
         _visitorUI.Bind(gameFlowManager.uiController);
-        _holdingUI.Bind(gameFlowManager.holdingAreaController, gameFlowManager.displayController);
+        _holdingUI.Bind(gameFlowManager.holdingAreaController, gameFlowManager.displayController,gameFlowManager.uiController);
         _decisionUI.Bind(gameFlowManager.uiController);
         _dragItemUI.Bind(gameFlowManager.holdingAreaController);
     }
