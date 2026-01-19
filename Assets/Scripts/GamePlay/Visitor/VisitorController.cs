@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine;
 
 public class VisitorController : IUpdatable
 {
@@ -10,7 +11,8 @@ public class VisitorController : IUpdatable
     private bool waitingForDelay = false;
     private float delayTime = 0f;
     private Action onDelayFinished = null;
-
+    private Action onAllVisitorsFinished;
+    
     private UIController uiController;
     private InventoryController inventoryController;
     
@@ -36,6 +38,8 @@ public class VisitorController : IUpdatable
     
     public void StartNextVisitor(Action onAllVisitorsFinished = null)
     {
+        this.onAllVisitorsFinished = onAllVisitorsFinished;
+        
         if (visitorQueue.Count == 0)
         {
             currentVisitor = null;
@@ -84,6 +88,6 @@ public class VisitorController : IUpdatable
         currentVisitor.Exit();
         currentVisitor = null;
 
-        StartNextVisitor();
+        StartNextVisitor(onAllVisitorsFinished);
     }
 }

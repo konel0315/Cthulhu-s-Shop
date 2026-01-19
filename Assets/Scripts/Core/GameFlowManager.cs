@@ -13,6 +13,7 @@ public class GameFlowManager
     public DisplayController displayController { get; private set;}
     public HoldingAreaController holdingAreaController { get; private set;}
     public DecisionController decisionController { get; private set;}
+    public AlchemyController alchemyController { get; private set;}
     public GameFlowManager()
     {
         // timeController = new TimeController();
@@ -23,6 +24,7 @@ public class GameFlowManager
         holdingAreaController = new HoldingAreaController(inventoryController, displayController);
         visitorController = new VisitorController(uiController,inventoryController);
         decisionController = new DecisionController(uiController, holdingAreaController,visitorController);
+        alchemyController = new AlchemyController();
     }
 
     public void ExcuteFlow()

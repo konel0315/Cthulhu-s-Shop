@@ -33,14 +33,14 @@ public class DayOpen : IGameFlow
             new MVPBreadVisitor()
         });
         visitorController.StartNextVisitor(OnConfirm);
-        //VisitorController.StartDayCusmtomer();
+        
     }
 
     public void Exit()
     {
         // timeController.OnDayTimeEnded -=OnConfirm;
         
-        inventoryController.displayController.SetEditable(true);
+        displayController.SetEditable(true);
         
         //VisitorController.EndDayCusmtomer();
     }

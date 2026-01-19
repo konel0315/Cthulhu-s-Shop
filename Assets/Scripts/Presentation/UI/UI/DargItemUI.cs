@@ -41,10 +41,10 @@ public class DragItemUI : MonoBehaviour
     
     public void BeginDrag(ItemSO item)
     {
-        if (item == null) return;
+        if (item == null) {return;}
 
-        if (!CanStartDrag())
-            return;
+        //if (!CanStartDrag())
+            //return;
         
         currentItem = item;
         icon.sprite = item.icon;

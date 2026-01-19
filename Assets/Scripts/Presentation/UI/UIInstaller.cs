@@ -14,6 +14,8 @@ public class UIInstaller : MonoBehaviour
     [SerializeField] private HoldingUI _holdingUI;
     [SerializeField] private DecisionUI _decisionUI;
     [SerializeField] private DragItemUI _dragItemUI;
+    [SerializeField] private AlchemyUI _alchemyUI;
+    [SerializeField] private AlchemyInventoryUI _alchemyInventoryUI;
 
     public void Bind(GameFlowManager gameFlowManager)
     {
@@ -29,5 +31,7 @@ public class UIInstaller : MonoBehaviour
         _holdingUI.Bind(gameFlowManager.holdingAreaController, gameFlowManager.displayController,gameFlowManager.uiController);
         _decisionUI.Bind(gameFlowManager.uiController);
         _dragItemUI.Bind(gameFlowManager.holdingAreaController);
+        _alchemyUI.Bind(gameFlowManager.alchemyController,gameFlowManager.inventoryController);
+        _alchemyInventoryUI.Bind(gameFlowManager.inventoryController);
     }
 }

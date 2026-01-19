@@ -21,11 +21,12 @@ public class DayPrepareFlow : IGameFlow
     {
         // timeController.Pause();
 
+        /*Item 지급*/
         ItemSO gold = Resources.Load<ItemSO>("Data/Item/Gold");
         inventoryController.AddItem(gold, 3);
         ItemSO bread = Resources.Load<ItemSO>("Data/Item/Bread");
         inventoryController.AddItem(bread, 4);
-        //displayController.SetInteractable(true);
+        
         uiController.ShowUIPrepareUI();
         uiController.ShowUIDayBackgroundUI();
         uiController.OnPrepareConfirmed += OnConfirm;
@@ -35,10 +36,7 @@ public class DayPrepareFlow : IGameFlow
     {
         // timeController.Resume();
         
-        
-        //displayController.SetInteractable(false);
         uiController.HideUIPrepareUI();
-        //uiController.HideUIDayBackgroundUI();
         uiController.OnPrepareConfirmed -= OnConfirm;
         
     }

@@ -8,14 +8,16 @@ public class DecisionNight : IGameFlow
 
     public DecisionNight(GameFlowManager gameFlowManager)
     {
-        this.gameFlowManager = gameFlowManager;
         // timeController = gameFlowManager.timeController;
+        
+        this.gameFlowManager = gameFlowManager;
         uiController = gameFlowManager.uiController;
     }
 
     public void Enter()
     {
         // timeController.Pause();
+        
         uiController.DecisionNightUIShowUI();
         uiController.OnNightConfirmed += OnNightConfirmed;
         uiController.OnNextDayConfirmed += OnNextDayConfirmed;
@@ -24,6 +26,7 @@ public class DecisionNight : IGameFlow
     public void Exit()
     {
         // timeController.Resume();
+        
         uiController.DecisionNightUIHideUI();
         uiController.OnNightConfirmed -= OnNightConfirmed;
         uiController.OnNextDayConfirmed -= OnNextDayConfirmed;
