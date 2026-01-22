@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class AlchemyUI : MonoBehaviour,
     IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IDropHandler
 {
     [SerializeField] private GameObject lightObj;
+    [SerializeField] private Button ReturnButton;
+    [SerializeField] private GameObject CoverSheet;
+    
     [SerializeField] private List<AlchemySlotUI> slots;
     [SerializeField] private AlchemyResultItem slotItem;
+    
 
     [SerializeField] private GameObject cartoon_1;
     [SerializeField] private GameObject cartoon_2;
@@ -23,6 +28,8 @@ public class AlchemyUI : MonoBehaviour,
         this.inventoryController = inventoryController;
         alchemyController.OnAlchemyChanged += RefreshSlots;
         RefreshSlots();
+        ReturnButton.onClick.AddListener(alchemyController.ReturnItem);
+        CoverSheet.SetActive(false);
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -65,6 +72,7 @@ public class AlchemyUI : MonoBehaviour,
 
     private IEnumerator  Cartoon()
     {
+        CoverSheet.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         cartoon_1.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
@@ -76,6 +84,7 @@ public class AlchemyUI : MonoBehaviour,
         cartoon_2.gameObject.SetActive(false);
         cartoon_3.gameObject.SetActive(false);
         alchemyController.AlchemyAllItems();
+        CoverSheet.SetActive(false);
     }
 
     public void OnPointerDown(PointerEventData eventData)

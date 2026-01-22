@@ -22,9 +22,9 @@ public class GameFlowManager
         inventoryController = new InventoryController();
         displayController = new DisplayController(inventoryController);
         holdingAreaController = new HoldingAreaController(inventoryController, displayController);
-        visitorController = new VisitorController(uiController,inventoryController);
+        visitorController = new VisitorController(uiController,inventoryController,holdingAreaController);
         decisionController = new DecisionController(uiController, holdingAreaController,visitorController);
-        alchemyController = new AlchemyController();
+        alchemyController = new AlchemyController(inventoryController);
     }
 
     public void ExcuteFlow()

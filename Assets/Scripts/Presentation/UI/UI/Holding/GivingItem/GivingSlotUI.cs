@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-class HoldingSlotUI : MonoBehaviour,IDropHandler
+class GivingSlotUI : MonoBehaviour,IDropHandler
 {
     
     [SerializeField] private Image icon;
@@ -38,8 +38,8 @@ class HoldingSlotUI : MonoBehaviour,IDropHandler
 
     public void RefreshSlot()
     {
-        var currentItem = holdingAreaController.GetItem();
-        if (holdingAreaController.GetItem() != null)
+        var currentItem = holdingAreaController.GetGiving();
+        if (holdingAreaController.GetGiving() != null)
             SetSlot(currentItem.item, currentItem.quantity);
         else
             ClearSlot();
@@ -52,7 +52,8 @@ class HoldingSlotUI : MonoBehaviour,IDropHandler
         IDraggableSlot draggedSlot = eventData.pointerDrag?.GetComponent<IDraggableSlot>();
         
         if (draggedSlot == null) return;
-
+        if (draggedSlot.SourceType == SlotSourceType.Taking) return;
+        
         if (draggedSlot is IDisplaySlot fromDisplaySlot)
         {
             holdingAreaController.AddFromDisplay(displayController.GetItemAt(fromDisplaySlot.displayIndex),fromDisplaySlot.displayIndex);

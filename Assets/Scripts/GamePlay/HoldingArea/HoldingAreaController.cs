@@ -3,12 +3,14 @@ using UnityEditorInternal.Profiling.Memory.Experimental;
 
 public class HoldingAreaController
 {
-    private PendingItem pending;
+    private PendingItem givingItem;
+    private PendingItem takingItem;
 
     private readonly InventoryController inventoryController;
     private readonly DisplayController displayController;
     
     public event Action OnHoldingAreaChanged;
+    public event Action OnTakingEmptied;
 
     public HoldingAreaController(
         InventoryController inventoryController,
@@ -18,24 +20,28 @@ public class HoldingAreaController
         this.displayController = displayController;
     }
 
-    public bool HasItem => pending != null;
+    public bool HasGiving => givingItem != null;
+    public bool HasTaking => takingItem != null;
 
-    public bool IsItem(String itemName, int amount)
+    public bool IsItem(string itemName, int amount)
     {
-        if(pending.item.Name == itemName&&pending.quantity>=amount) return true;
-        return false;
+        if (!HasGiving) return false;
+        return givingItem.item.Name == itemName &&
+               givingItem.quantity >= amount;
     }
     
-    public PendingItem GetItem()=>pending;
+    public PendingItem GetGiving() => givingItem;
+    public PendingItem GetTaking() => takingItem;
+
     public void AddFromInventory(ItemSO item, int quantity)
     {
-        if (HasItem) return;
+        if (HasGiving) return;
         if (item == null || quantity <= 0) return;
         if (item.Name != "금") return;
 
         if (!inventoryController.RemoveItem(item, quantity)) return;
 
-        pending = new PendingItem
+        givingItem = new PendingItem
         {
             item = item,
             quantity = quantity,
@@ -46,12 +52,12 @@ public class HoldingAreaController
 
     public void AddFromDisplay(ItemSO item, int index)
     {
-        if (HasItem) return;
+        if (HasGiving) return;
         if (item == null) return;
 
         if (!displayController.RemoveAt(index)) return;
 
-        pending = new PendingItem
+        givingItem = new PendingItem
         {
             item = item,
             quantity = 1,
@@ -60,30 +66,53 @@ public class HoldingAreaController
         };
         OnHoldingAreaChanged?.Invoke();
     }
+    
+    public void CreateTaking(ItemSO item, int quantity)
+    {
+        if (HasTaking) return;
 
+        takingItem = new PendingItem
+        {
+            item = item,
+            quantity = quantity
+        };
+
+        OnHoldingAreaChanged?.Invoke();
+    }
+
+    public void ReturnTakingItemToInventory()
+    {
+        if (!HasTaking) return;
+        
+        inventoryController.AddItem(takingItem.item, takingItem.quantity);
+        takingItem = null;
+        OnHoldingAreaChanged?.Invoke();
+        OnTakingEmptied?.Invoke();
+    }
+    
     public void Accept()
     {
-        pending = null;
+        givingItem = null;
         OnHoldingAreaChanged?.Invoke();
     }
 
     public void Reject()
     {
-        if (pending == null) return;
+        if (givingItem == null) return;
 
-        if (pending.source == ItemSource.Inventory)
+        if (givingItem.source == ItemSource.Inventory)
         {
-            inventoryController.AddItem(pending.item, pending.quantity);
+            inventoryController.AddItem(givingItem.item, givingItem.quantity);
         }
         else
         {
             displayController.PlaceFromHoldinArea(
-                pending.item,
-                pending.sourceIndex
+                givingItem.item,
+                givingItem.sourceIndex
             );
         }
 
-        pending = null;
+        givingItem = null;
         OnHoldingAreaChanged?.Invoke();
     }
 }

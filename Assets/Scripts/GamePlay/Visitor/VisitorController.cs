@@ -15,15 +15,17 @@ public class VisitorController : IUpdatable
     
     private UIController uiController;
     private InventoryController inventoryController;
+    private HoldingAreaController holdingAreaController;
     
     public ScriptedVisitor CurrentVisitor => currentVisitor;
     
     
 
-    public VisitorController(UIController uiController, InventoryController inventoryController)
+    public VisitorController(UIController uiController, InventoryController inventoryController,HoldingAreaController holdingAreaController)
     {
         this.uiController = uiController;
         this.inventoryController = inventoryController;
+        this.holdingAreaController = holdingAreaController;
     }
 
     public void SetVisitors(IEnumerable<ScriptedVisitor> visitors)
@@ -31,7 +33,7 @@ public class VisitorController : IUpdatable
         visitorQueue.Clear();
         foreach (var visitor in visitors)
         {
-            visitor.Bind(uiController,inventoryController);
+            visitor.Bind(uiController,inventoryController,holdingAreaController);
             visitorQueue.Enqueue(visitor);
         }
     }
@@ -81,6 +83,13 @@ public class VisitorController : IUpdatable
         
     }
     
+    public void ClearCurrentVisitor()
+    {
+        if (currentVisitor == null) return;
+
+        currentVisitor.Exit();
+    }
+
     public void EndCurrentVisitor()
     {
         if (currentVisitor == null) return;

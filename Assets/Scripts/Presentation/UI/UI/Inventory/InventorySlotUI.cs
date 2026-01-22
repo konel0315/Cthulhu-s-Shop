@@ -10,12 +10,15 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private InventoryController inventoryController;
     private DisplayController displayController;
+    private HoldingAreaController holdingAreaController;
+    
     public GameItem currentItem {get; private set; }
     public SlotSourceType SourceType => SlotSourceType.Inventory;
-    public void Bind(InventoryController controller, DisplayController displayController)
+    public void Bind(InventoryController controller, DisplayController displayController,HoldingAreaController holdingAreaController)
     {
         inventoryController = controller;
         this.displayController= displayController;
+        this.holdingAreaController= holdingAreaController;
         currentItem = null;
         RefreshSlot();
     }
@@ -66,8 +69,9 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     
     public void OnDrop(PointerEventData eventData)
     { 
-        if (!DragItemUI.Instance.CanStartDrag())
+        if (!DragItemUI.Instance.IsDragging())
             return;
+        
         IDraggableSlot draggedSlot = eventData.pointerDrag?.GetComponent<IDraggableSlot>();
         
         if (draggedSlot == null) return;
@@ -76,7 +80,12 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         {
             displayController.ReturnToInventory(fromDisplaySlot.displayIndex);
         }
-        
+
+        if (draggedSlot.SourceType == SlotSourceType.Taking)
+        {
+            holdingAreaController.ReturnTakingItemToInventory();
+        }
+
         draggedSlot.RefreshSlot();
         RefreshSlot();
     }

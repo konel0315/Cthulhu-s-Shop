@@ -8,7 +8,14 @@ public class AlchemyController
     public GameItem _craftedItem { get; private set; }
 
     public IReadOnlyList<GameItem> Items => items;
-    
+
+    private InventoryController inventory;
+        
+    public AlchemyController(InventoryController inventory)
+    {
+        this.inventory = inventory;
+    }
+
 
     public bool CanAddItem()
     {
@@ -26,8 +33,8 @@ public class AlchemyController
         items.Add(new GameItem(itemData, 1));
         OnAlchemyChanged?.Invoke();
     }
-
-    public void ClearAll(InventoryController inventory)
+    
+	public void ReturnItem()
     {
         foreach (var item in items)
         {
@@ -36,7 +43,6 @@ public class AlchemyController
         items.Clear();
         OnAlchemyChanged?.Invoke();
     }
-
     public void AlchemyAllItems()
     {
         int ALlValue = 0;

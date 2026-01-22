@@ -29,9 +29,9 @@ public class DragItemUI : MonoBehaviour
         }
     }
     
-    public bool CanStartDrag()
+    public bool IsDragging()
     {
-        return holdingArea == null || !holdingArea.HasItem;
+        return holdingArea == null || !holdingArea.HasGiving;
     }
 
     public void UpdatePosition(Vector3 position)

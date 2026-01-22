@@ -1,22 +1,30 @@
 ﻿public class SettleTheDay : IGameFlow
 {
-    private readonly GameFlowManager gameFlowManager;
     // private readonly TimeController timeController;
+    
+    private readonly GameFlowManager gameFlowManager;
     private readonly UIController uiController;
 
     public SettleTheDay(GameFlowManager gameFlowManager)
     {
-        this.gameFlowManager = gameFlowManager;
         // timeController = gameFlowManager.timeController;
+        
+        this.gameFlowManager = gameFlowManager;
         uiController = gameFlowManager.uiController;
     }
 
     public void Enter()
     {
+        uiController.ShowUIAlchemyBackgroundUI();
+        uiController.ShowUIComplementUI();
+        uiController.OnComplementConfirmed+=OnConfirm;
     }
 
     public void Exit()
     {
+        uiController.HideUIAlchemyBackgroundUI();
+        uiController.HideUIComplementUI();
+        uiController.OnComplementConfirmed -= OnConfirm;
     }
 
     private void OnConfirm()

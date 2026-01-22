@@ -2,5 +2,6 @@
 {
     Inventory,
     Display,
-    HoldingZone
+    Giving,
+    Taking
 }

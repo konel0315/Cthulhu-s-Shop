@@ -62,7 +62,7 @@ class DisplaySlotUI : MonoBehaviour, IDropHandler,IBeginDragHandler, IDragHandle
     
     public void OnDrop(PointerEventData eventData)
     { 
-        if (!DragItemUI.Instance.CanStartDrag())
+        if (!DragItemUI.Instance.IsDragging())
             return;
         
         IDraggableSlot draggedSlot = eventData.pointerDrag?.GetComponent<IDraggableSlot>();

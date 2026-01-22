@@ -31,7 +31,7 @@ public class MVPBreadVisitor : ScriptedVisitor,IChoosable
         onFinished?.Invoke();
     }
 
-    public override bool CanAccept(HoldingAreaController holdingAreaController)
+    public override bool CanAccept()
     {
         if(holdingAreaController.IsItem("빵",1)) return true;
         return  false;
@@ -41,7 +41,7 @@ public class MVPBreadVisitor : ScriptedVisitor,IChoosable
     {
         //uiController.SetVisitorPortrait(Resources.Load<Sprite>("Visitors/감사한 행인"));
         ItemSO Old_Copper_Dagger = Resources.Load<ItemSO>("Data/Item/Old_Copper_Dagger");
-        inventoryController.AddItem(Old_Copper_Dagger, 1);
+        holdingAreaController.CreateTaking(Old_Copper_Dagger,1);
         uiController.SetVisitorDialogue("돌아가는 길에 뺏기지나 말아야 할텐데...");
         uiController.HideBubbleUI();
     }

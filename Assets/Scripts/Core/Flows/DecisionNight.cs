@@ -2,8 +2,9 @@
 
 public class DecisionNight : IGameFlow
 {
-    private readonly GameFlowManager gameFlowManager;
     // private readonly TimeController timeController;
+    
+    private readonly GameFlowManager gameFlowManager;
     private readonly UIController uiController;
 
     public DecisionNight(GameFlowManager gameFlowManager)

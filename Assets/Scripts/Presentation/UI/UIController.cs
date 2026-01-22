@@ -16,7 +16,19 @@ public class UIController
     {
         OnPrepareConfirmed?.Invoke();
     }
+    /*Complement Class*/
+    public event Action onShowUIComplementUI;
+    public event Action onHideUIComplementUI;
+    public event Action OnComplementConfirmed;
     
+    public void ShowUIComplementUI()=>onShowUIComplementUI?.Invoke();
+    public void HideUIComplementUI()=>onHideUIComplementUI?.Invoke();
+    
+    public void ComplementConfirmed()
+    {
+        OnComplementConfirmed?.Invoke();
+    }
+
     /*Decision Class*/
     public event Action onShowUIDecisionNightUIShowUI;
     public event Action onHideUIDecisionNightUIShowUI;
@@ -47,6 +59,12 @@ public class UIController
     public void ShowUINightBackgroundUI()=>onShowUINightBackgroundUI?.Invoke();
     public void HideUINightBackgroundUI()=>onHideUINightBackgroundUI?.Invoke();
     
+    /*AlchemyBackGround Class*/
+    public event Action onShowUIAlchemyBackgroundUI;
+    public event Action onHideUIAlchemyBackgroundUI;
+    public void ShowUIAlchemyBackgroundUI()=>onShowUIAlchemyBackgroundUI?.Invoke();
+    public void HideUIAlchemyBackgroundUI()=>onHideUIAlchemyBackgroundUI?.Invoke();
+
     /*Decision Class*/
     public event Action OnAcceptPressed;
     public event Action OnRejectPressed;

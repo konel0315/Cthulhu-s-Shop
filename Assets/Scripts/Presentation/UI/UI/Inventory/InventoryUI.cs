@@ -8,14 +8,16 @@ public class InventoryUI : MonoBehaviour
     
     private InventoryController inventoryController;
     private DisplayController displayController;
-    public void Bind(InventoryController inventoryController,DisplayController displayController)
+    private HoldingAreaController holdingAreaController;
+    
+    public void Bind(InventoryController inventoryController,DisplayController displayController,HoldingAreaController holdingAreaController)
     {
         this.inventoryController = inventoryController;
         this.displayController = displayController;
         RefreshUI();
         for (int i=0; i<slots.Count; i++)
         {
-            slots[i].Bind(inventoryController,displayController);
+            slots[i].Bind(inventoryController,displayController,holdingAreaController);
         }
         inventoryController.OnInventoryChanged += RefreshUI;
     }

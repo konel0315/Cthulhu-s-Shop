@@ -6,11 +6,12 @@ public abstract class ScriptedVisitor
 {
     protected UIController uiController; 
     protected InventoryController inventoryController;
-
-    public void Bind(UIController uiController, InventoryController inventory)
+    protected HoldingAreaController holdingAreaController;
+    public void Bind(UIController uiController, InventoryController inventory,HoldingAreaController holdingAreaController)
     {
         this.uiController = uiController;
         this.inventoryController = inventory;
+        this.holdingAreaController = holdingAreaController;
     }
 
     public virtual void Enter()
@@ -33,7 +34,7 @@ public abstract class ScriptedVisitor
         uiController.HideVisitorUI();
     }
 
-    public virtual bool CanAccept(HoldingAreaController holdingAreaController)
+    public virtual bool CanAccept()
     {
         return true;
     }

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class HoldingUI : MonoBehaviour
+public class GivingUI : MonoBehaviour
 {
     [SerializeField] private GameObject root;
-    [SerializeField] private HoldingSlotUI slot;
+    [SerializeField] private GivingSlotUI slot;
     
     private HoldingAreaController _holdingAreaController;
     private DisplayController _displayController;
@@ -40,7 +40,7 @@ public class HoldingUI : MonoBehaviour
     {
         if (_holdingAreaController == null) return;
 
-        var item = _holdingAreaController.GetItem();
+        var item = _holdingAreaController.GetGiving();
         if (item != null)
         {
             slot.SetSlot(item.item, item.quantity);
