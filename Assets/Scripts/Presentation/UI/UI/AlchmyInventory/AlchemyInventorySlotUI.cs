@@ -4,16 +4,21 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class AlchemyInventorySlotUI : MonoBehaviour,
-    IBeginDragHandler, IDragHandler, IEndDragHandler
+    IBeginDragHandler, IDragHandler, IEndDragHandler,
+    IDropHandler
+
 {
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI quantityText;
 
+    private AlchemyController alchemyController;
+    
     public GameItem CurrentItem { get; private set; }
 
-    public void Bind(InventoryController controller)
+    public void Bind(InventoryController controller, AlchemyController alchemyController)
     {
         ClearSlot();
+        this.alchemyController = alchemyController;
     }
 
     public void SetSlot(GameItem item)
@@ -44,5 +49,16 @@ public class AlchemyInventorySlotUI : MonoBehaviour,
     public void OnEndDrag(PointerEventData eventData)
     {
         DragItemUI.Instance.EndDrag();
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        IDraggableSlot draggedSlot = eventData.pointerDrag.GetComponent<IDraggableSlot>();
+        if (draggedSlot == null) return;
+        if (draggedSlot.SourceType == SlotSourceType.AlchemyResult)
+        {
+            alchemyController.AcquireItem();
+        }
+        draggedSlot.RefreshSlot();
     }
 }

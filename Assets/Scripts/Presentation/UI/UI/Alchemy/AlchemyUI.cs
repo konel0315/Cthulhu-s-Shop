@@ -22,6 +22,8 @@ public class AlchemyUI : MonoBehaviour,
     private AlchemyController alchemyController;
     private InventoryController inventoryController;
 
+    private bool isPressed;
+    
     public void Bind(AlchemyController controller, InventoryController inventoryController)
     {
         alchemyController = controller;
@@ -36,7 +38,8 @@ public class AlchemyUI : MonoBehaviour,
     {
         var itemData = DragItemUI.Instance.GetDraggingItem();
         if (itemData == null) return;
-        
+        if (alchemyController.IsCrafted())
+            return;
         
         if (!alchemyController.CanAddItem())
             return;
@@ -89,17 +92,31 @@ public class AlchemyUI : MonoBehaviour,
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+        if (alchemyController.Items.Count <= 0)
+            return;
+        
+        isPressed = true;
         lightObj.SetActive(true);
         StartCartoon();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        lightObj.SetActive(false);
+        Release();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        Release();
+    }
+
+    private void Release()
+    {
+        if (!isPressed) return;
+
+        isPressed = false;
         lightObj.SetActive(false);
     }
 }

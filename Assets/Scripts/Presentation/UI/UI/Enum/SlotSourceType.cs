@@ -3,5 +3,6 @@
     Inventory,
     Display,
     Giving,
-    Taking
+    Taking,
+    AlchemyResult
 }

@@ -6,16 +6,18 @@ public class AlchemyInventoryUI : MonoBehaviour
     [SerializeField] private List<AlchemyInventorySlotUI> slots;
 
     private InventoryController inventoryController;
+    private AlchemyController alchemyController;
 
-    public void Bind(InventoryController inventoryController)
+    public void Bind(InventoryController inventoryController, AlchemyController alchemyController)
     {
         this.inventoryController = inventoryController;
+        this.alchemyController = alchemyController;
         inventoryController.OnInventoryChanged += RefreshUI;
         RefreshUI();
 
         for (int i = 0; i < slots.Count; i++)
         {
-            slots[i].Bind(inventoryController);
+            slots[i].Bind(inventoryController, alchemyController);
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AlchemyController
@@ -43,6 +44,17 @@ public class AlchemyController
         items.Clear();
         OnAlchemyChanged?.Invoke();
     }
+
+    public void AcquireItem()
+    {
+        if (IsCrafted())
+        {
+            inventory.AddItem(_craftedItem.itemData, _craftedItem.Quantity);
+            _craftedItem = null;
+            OnAlchemyChanged?.Invoke();
+        }
+    }
+
     public void AlchemyAllItems()
     {
         int ALlValue = 0;
@@ -53,7 +65,7 @@ public class AlchemyController
         }
         items.Clear();
         ItemSO gold = Resources.Load<ItemSO>("Data/Item/Gold");
-        _craftedItem= new GameItem(gold, (int)(ALlValue*(0.007)));
+        _craftedItem= new GameItem(gold, Math.Max(1,(int)(ALlValue*(0.007))));
         OnAlchemyChanged?.Invoke();
     }
 

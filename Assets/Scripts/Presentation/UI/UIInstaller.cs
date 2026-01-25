@@ -41,6 +41,6 @@ public class UIInstaller : MonoBehaviour
         _decisionUI.Bind(gameFlowManager.uiController);
         _dragItemUI.Bind(gameFlowManager.holdingAreaController);
         _alchemyUI.Bind(gameFlowManager.alchemyController,gameFlowManager.inventoryController);
-        _alchemyInventoryUI.Bind(gameFlowManager.inventoryController);
+        _alchemyInventoryUI.Bind(gameFlowManager.inventoryController,gameFlowManager.alchemyController);
     }
 }

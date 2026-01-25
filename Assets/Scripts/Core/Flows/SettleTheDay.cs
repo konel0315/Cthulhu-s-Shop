@@ -29,6 +29,6 @@
 
     private void OnConfirm()
     {
-        gameFlowManager.ChangeFlow(new DayOpen(gameFlowManager));
+        gameFlowManager.ChangeFlow(new DayPrepareFlow(gameFlowManager));
     }
 }
